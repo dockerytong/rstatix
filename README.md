@@ -31,117 +31,81 @@ association between categorical variables. The package contains helper
 functions for identifying univariate and multivariate outliers,
 assessing normality and homogeneity of variances.
 
-Key functions
+核心函数
 -------------
 
 ### Descriptive statistics
 
--   `get_summary_stats()`: Compute summary statistics for one or
-    multiple numeric variables. Can handle grouped data.
--   `freq_table()`: Compute frequency table of categorical variables.
--   `get_mode()`: Compute the mode of a vector, that is the most
-    frequent values.
--   `identify_outliers()`: Detect univariate outliers using boxplot
-    methods.
--   `mahalanobis_distance()`: Compute Mahalanobis Distance and Flag
-    Multivariate Outliers.
--   `shapiro_test()` and `mshapiro_test()`: Univariate and multivariate
-    Shapiro-Wilk normality test.
+-   `get_summary_stats()`: 计算一个或多个数值变量的摘要统计信息。可以处理分组数据.
+-   `freq_table()`: 计算分类变量频率表.
+-   `get_mode()`: 计算向量的模式，这是最常见的值.
+-   `identify_outliers()`: 用箱线图方法检测单变量异常值.
+-   `mahalanobis_distance()`: 计算马氏距离和标志多元离群值.
+-   `shapiro_test()` and `mshapiro_test()`: 单变量和多变量Shapiro-Wilk正态性检验.
 
-### Comparing means
+### 均值比较
 
--   `t_test()`: perform one-sample, two-sample and pairwise t-tests
--   `wilcox_test()`: perform one-sample, two-sample and pairwise
-    Wilcoxon tests
--   `sign_test()`: perform sign test to determine whether there is a
-    median difference between paired or matched observations.
--   `anova_test()`: an easy-to-use wrapper around `car::Anova()` to
-    perform different types of ANOVA tests, including **independent
-    measures ANOVA**, **repeated measures ANOVA** and **mixed ANOVA**.
--   `get_anova_test_table()`: extract ANOVA table from `anova_test()`
-    results. Can apply sphericity correction automatically in the case
-    of within-subject (repeated measures) designs.
-    `- welch_anova_test()`: Welch one-Way ANOVA test. A pipe-friendly
-    wrapper around the base function `stats::oneway.test()`. This is is
-    an alternative to the standard one-way ANOVA in the situation where
-    the homogeneity of variance assumption is violated.
--   `kruskal_test()`: perform kruskal-wallis rank sum test
--   `friedman_test()`: Provides a pipe-friendly framework to perform a
-    Friedman rank sum test, which is the non-parametric alternative to
-    the one-way repeated measures ANOVA test.
--   `get_comparisons()`: Create a list of possible pairwise comparisons
-    between groups.
--   `get_pvalue_position`: autocompute p-value positions for plotting
-    significance using ggplot2.
+-   `t_test()`: 进行单样本、两样本和成对t检验
+-   `wilcox_test()`: 进行单样本、两样本和成对的Wilcoxon测试
+-   `sign_test()`: 进行符号测试, 以确定成对或匹配的观察值之间是否存在中位数差异.
+-   `anova_test()`: 使用`car::Anova()`进行不同类型方差分析的易用包装, 包括__单次测量方差分析__, __重复测量方差分析__以及__混合方差分析__.
+-   `get_anova_test_table()`: 从`anova_test()`中提取方差表。 可在受试者内（重复测量）设计中自动应用球度校正.
+    `- welch_anova_test()`: 韦尔奇 (Welch) 单因素方差分析. A pipe-friendly
+    wrapper around the base function `stats::oneway.test()`. 在方差齐性假设被违反的情况下，这是标准单因素方差分析的一种替代方法.
+-   `kruskal_test()`: 进行kruskal-wallis秩和检验
+-   `friedman_test()`: 提供了一个管道友好的框架来执行Friedman秩和检验，它是单向重复测量方差分析的非参数替代方法.
+-   `get_comparisons()`: 创建组间可能的成对比较列表.
+-   `get_pvalue_position`: 使用ggplot2自动计算绘制显著性的p值位置.
 
-### Facilitating ANOVA computation in R
+### 增强 R 的方差分析计算
 
 -   `factorial_design()`: build factorial design for easily computing
     ANOVA using the `car::Anova()` function. This might be very useful
     for repeated measures ANOVA, which is hard to set up with the `car`
     package.
 -   `anova_summary()`: Create beautiful summary tables of ANOVA test
-    results obtained from either `car::Anova()` or `stats::aov()`. The
-    results include ANOVA table, generalized effect size and some
-    assumption checks, such as Mauchly’s test for sphericity in the case
-    of repeated measures ANOVA.
+    results obtained from either `car::Anova()` or `stats::aov()`. 结果包括方差分析表、广义效应大小和一些假设检验，如重复测量方差分析中的Mauchly球度检验.
 
-### Post-hoc analyses
+### 事后 (post-hoc) 分析
 
--   `tukey_hsd()`: performs tukey post-hoc tests. Can handle different
-    inputs formats: aov, lm, formula.
--   `dunn_test()`: compute multiple pairwise comparisons following
-    Kruskal-Wallis test.
--   `games_howell_test()`: Performs Games-Howell test, which is used to
-    compare all possible combinations of group differences when the
-    assumption of homogeneity of variances is violated.
+-   `tukey_hsd()`: 执行tukey事后测试。可以处理不同的输入格式：aov，lm，formula.
+-   `dunn_test()`: 根据Kruskal-Wallis检验计算多对比较.
+-   `games_howell_test()`: 进行博弈豪厄尔检验，当方差齐性假设被违背时，用来比较所有可能的群体差异组合.
 -   `emmeans_test()`: pipe-friendly wrapper arround `emmeans` function
-    to perform pairwise comparisons of estimated marginal means. Useful
-    for post-hoc analyses following up ANOVA/ANCOVA tests.
+    to perform pairwise comparisons of estimated marginal means. 用于ANOVA/ANCOVA测试后的事后分析.
 
-### Comparing proportions
+### 比较比例数据
 
--   `prop_test()`, `pairwise_prop_test()` and `row_wise_prop_test()`.
-    Performs one-sample and two-samples z-test of proportions. Wrappers
+-   `prop_test()`, `pairwise_prop_test()` 和 `row_wise_prop_test()`.
+    执行一个样本和两个样本的比例z检验. Wrappers
     around the R base function `prop.test()` but have the advantage of
     performing pairwise and row-wise z-test of two proportions, the
     post-hoc tests following a significant chi-square test of
     homogeneity for 2xc and rx2 contingency tables.
 -   `fisher_test()`, `pairwise_fisher_test()` and
-    `row_wise_fisher_test()`: Fisher’s exact test for count data.
+    `row_wise_fisher_test()`: 计数数据的Fisher精确检验.
     Wrappers around the R base function `fisher.test()` but have the
     advantage of performing pairwise and row-wise fisher tests, the
     post-hoc tests following a significant chi-square test of
     homogeneity for 2xc and rx2 contingency tables.
 -   `chisq_test()`, `pairwise_chisq_gof_test()`,
-    `pairwise_chisq_test_against_p()`: Performs chi-squared tests,
-    including goodness-of-fit, homogeneity and independence tests.
+    `pairwise_chisq_test_against_p()`: 进行卡方检验，包括拟合优度、同质性和独立性检验.
 -   `binom_test()`, `pairwise_binom_test()`,
-    `pairwise_binom_test_against_p()`: Performs exact binomial test and
-    pairwise comparisons following a significant exact multinomial test.
-    Alternative to the chi-square test of goodness-of-fit-test when the
-    sample.
--   `multinom_test()`: performs an exact multinomial test. Alternative
-    to the chi-square test of goodness-of-fit-test when the sample size
-    is small.
--   `mcnemar_test()`: performs McNemar chi-squared test to compare
-    paired proportions. Provides pairwise comparisons between multiple
-    groups.
--   `cochran_qtest()`: extension of the McNemar Chi-squared test for
-    comparing more than two paired proportions.
--   `prop_trend_test()`: Performs chi-squared test for trend in
-    proportion. This test is also known as Cochran-Armitage trend test.
+    `pairwise_binom_test_against_p()`: 执行精确的二项式检验和配对比较，然后进行显著的精确多项式检验.
+    替代卡方检验的拟合优度检验当样本.
+-   `multinom_test()`: 进行精确的多项式检验. 当样本量较小时，可替代卡方检验的拟合优度检验.
+-   `mcnemar_test()`: 执行McNemar卡方检验来比较配对比例. 提供多个组之间的成对比较.
+-   `cochran_qtest()`: McNemar卡方检验用于比较两个以上配对比例的扩展.
+-   `prop_trend_test()`: 按比例对趋势进行卡方检验。这种测试也被称为Cochran-Armitage趋势测试.
 
-### Comparing variances
+### 比较方差
 
--   `levene_test()`: Pipe-friendly framework to easily compute Levene’s
-    test for homogeneity of variance across groups. Handles grouped
-    data.
--   `box_m()`: Box’s M-test for homogeneity of covariance matrices
+-   `levene_test()`: 管道友好的框架，可以轻松地计算各组方差齐性的Levene检验。处理分组数据.
+-   `box_m()`: 协方差矩阵齐性的Box M检验
 
-### Effect Size
+### 效应量
 
--   `cohens_d()`: Compute cohen’s d measure of effect size for t-tests.
+-   `cohens_d()`: t检验中cohen的效应大小度量.
 -   `wilcox_effsize()`: Compute Wilcoxon effect size (r).
 -   `eta_squared()` and `partial_eta_squared()`: Compute effect size for
     ANOVA.
@@ -152,7 +116,7 @@ Key functions
 -   `cramer_v()`: Compute Cramer’s V, which measures the strength of the
     association between categorical variables.
 
-### Correlation analysis
+### 相关性分析
 
 **Computing correlation**:
 
@@ -254,7 +218,7 @@ standard evaluation.
 -   `counts_to_cases()`: converts a contingency table or a data frame of
     counts into a data frame of individual observations.
 
-Installation and loading
+包的安装和加载
 ------------------------
 
 -   Install the latest developmental version from
@@ -279,7 +243,7 @@ library(rstatix)
 library(ggpubr)  # For easy data-visualization
 ```
 
-Descriptive statistics
+描述性统计
 ----------------------
 
 ``` r
@@ -318,14 +282,12 @@ iris %>%
 #> 3 virginica  Sepal.Length    50  6.59 0.636
 ```
 
-Comparing two means
+两均值比较
 -------------------
 
-To compare the means of two groups, you can use either the function
-`t_test()` (parametric) or `wilcox_test()` (non-parametric). In the
-following example the t-test will be illustrated.
+要比较两组的平均值，可以使用函数`t_test()` (参数) 或`wilcox_test()` (非参). 在下面的例子中，将说明t检验.
 
-### Data
+### 数据
 
 Preparing the demo data set:
 
@@ -342,7 +304,7 @@ head(df)
 #> 6 10.0   VC  0.5
 ```
 
-### One-sample test
+### 单样本检验
 
 The one-sample test is used to compare the mean of one sample to a known
 standard (or theoretical / hypothetical) mean (`mu`).
@@ -365,9 +327,9 @@ df %>%
 #> 3 2     len   1      null model    20      30.9    19 1.03e-17
 ```
 
-### Compare two independent groups
+### 两组独立样本检验
 
--   Create a simple box plot with p-values:
+-   创建带有p值的箱型图
 
 ``` r
 # T-test
@@ -400,7 +362,7 @@ p +stat_pvalue_manual(stat.test, label = "T-test, p = {p}",
 
 ![](tools/README-custoize-p-value-labels-1.png)
 
--   Grouped data: compare supp levels after grouping the data by “dose”
+-   数据分组: compare supp levels after grouping the data by “dose”
 
 ``` r
 # Statistical test
@@ -429,7 +391,7 @@ ggboxplot(
 
 ![](tools/README-grouped-two-sample-t-test-1.png)
 
-### Compare paired samples
+### 成对样本检验
 
 ``` r
 # T-test
@@ -451,7 +413,7 @@ p + stat_pvalue_manual(stat.test, label = "p", y.position = 36)
 
 ![](tools/README-paired-t-test-1.png)
 
-### Multiple pairwise comparisons
+### 多重比较
 
 -   Pairwise comparisons: if the grouping variable contains more than
     two categories, a pairwise comparison is automatically performed.
@@ -537,11 +499,11 @@ ggboxplot(df, x = "dose", y = "len") +
 
 ![](tools/README-comparison-against-base-mean-1.png)
 
-ANOVA test
+方差分析
 ----------
 
 ``` r
-# One-way ANOVA test
+# 单因素方差分析
 #:::::::::::::::::::::::::::::::::::::::::
 df %>% anova_test(len ~ dose)
 #> ANOVA Table (type II tests)
@@ -549,7 +511,7 @@ df %>% anova_test(len ~ dose)
 #>   Effect DFn DFd      F        p p<.05   ges
 #> 1   dose   2  57 67.416 9.53e-16     * 0.703
 
-# Two-way ANOVA test
+# 双因素方差分析
 #:::::::::::::::::::::::::::::::::::::::::
 df %>% anova_test(len ~ supp*dose)
 #> ANOVA Table (type II tests)
@@ -559,7 +521,7 @@ df %>% anova_test(len ~ supp*dose)
 #> 2      dose   2  54 92.000 4.05e-18     * 0.773
 #> 3 supp:dose   2  54  4.107 2.20e-02     * 0.132
 
-# Two-way repeated measures ANOVA
+# 双因素重复测量方差分析
 #:::::::::::::::::::::::::::::::::::::::::
 df$id <- rep(1:10, 6) # Add individuals id
 # Use formula
@@ -587,7 +549,7 @@ df %>% anova_test(dv = len, wid = id, within = c(supp, dose))
 #> 1         *
 #> 2
 
-# Use model as arguments
+# 使用模型作为参数
 #:::::::::::::::::::::::::::::::::::::::::
 .my.model <- lm(yield ~ block + N*P*K, npk)
 anova_test(.my.model)
@@ -604,11 +566,11 @@ anova_test(.my.model)
 #> 8  N:P:K   0  12     NA    NA  <NA>    NA
 ```
 
-Correlation tests
+相关性分析
 -----------------
 
 ``` r
-# Data preparation
+# 数据准备
 mydata <- mtcars %>% 
   select(mpg, disp, hp, drat, wt, qsec)
 head(mydata, 3)
@@ -617,7 +579,7 @@ head(mydata, 3)
 #> Mazda RX4 Wag 21.0  160 110 3.90 2.875 17.02
 #> Datsun 710    22.8  108  93 3.85 2.320 18.61
 
-# Correlation test between two variables
+# 两个因子的相关性分析
 mydata %>% cor_test(wt, mpg, method = "pearson")
 #> # A tibble: 1 x 8
 #>   var1  var2    cor statistic        p conf.low conf.high method 
@@ -653,7 +615,7 @@ mydata %>% cor_test(method = "pearson")
 #> # … with 26 more rows
 ```
 
-Correlation matrix
+相关性矩阵
 ------------------
 
 ``` r
